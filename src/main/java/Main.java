@@ -58,11 +58,6 @@ public class Main {
         System.out.println(table.toString());
 
 
-
-
-
-
-
     }
 
     private Frame elementFrame(ElementList.Element element){
