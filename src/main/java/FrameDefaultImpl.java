@@ -34,13 +34,10 @@ public class FrameDefaultImpl implements Frame {
             result.addAll(other.getList());
         }
         else {
-            boolean firstLongest = countDash(this.lines.get(this.lines.size()-1), other.getList().get(0));
+            boolean firstLongest = countDash(this.lines.get(this.lines.size()-1), other.getList().get(0));//we keep the line with more '-'
             if(firstLongest){
                 result.addAll(this.lines);
                 for(int n = 1; n < other.getList().size(); n++) result.add(other.getList().get(n));
-                for(int n = 0; n < this.lines.size()-1; n++) result.add(this.lines.get(n));
-                result.addAll(other.getList());
-
             }
             else{
                 for(int n = 0; n < this.lines.size()-1; n++) result.add(this.lines.get(n));
@@ -58,24 +55,25 @@ public class FrameDefaultImpl implements Frame {
             for(int i = 0; i < Math.min(this.getList().size(), other.getList().size()); i++){
                 result.add(this.getList().get(i) + other.getList().get(i));
             }
-            if(this.getList().size() > other.getList().size()){ //add the last element if this is bigger. We are building a box.
+            if(this.getList().size() > other.getList().size()){ //add the last element if 'this' is bigger. We are building a box.
                 result.add(this.getList().get(this.getList().size() - 1) + " ".repeat(other.getList().get(0).length()));
             }
-            else if (this.getList().size() < other.getList().size()) { // add the last element if other is bigger. We are building a box.
+            else if (this.getList().size() < other.getList().size()) { // add the last element if 'other' is bigger. We are building a box.
                 result.add(" ".repeat(this.getList().get(0).length()) + other.getList().get(other.getList().size() - 1));
             }
         }
         else{
+            //check the first char of thebox on the right and the last char of the box on the left.
             char lastChar = this.lines.get(this.lines.size() / 2).charAt(this.lines.get(this.lines.size() / 2).length() -1);
             char firstChar = other.getList().get(other.getList().size() /2).charAt(0);
-            if(lastChar == firstChar || lastChar > ' ' ){
+            if(lastChar == firstChar || lastChar > ' ' ){ //if are the same (two spaces or two '|') or the left box is a blank override the first char of the right box
                 for(int i = 0; i < this.getList().size(); i++){
                     result.add(this.getList().get(i) + other.getList().get(i).substring(1)); // if are the same keep the left one
                 }
             }
-            else{
+            else{//override the last char of the left box
                 for(int i = 0; i < this.getList().size(); i++){
-                    result.add(this.getList().get(i).substring(0, this.getList().get(i).length()-1) + other.getList().get(i)); // if are the same keep the left one
+                    result.add(this.getList().get(i).substring(0, this.getList().get(i).length()-1) + other.getList().get(i));
                 }
 
             }
@@ -92,13 +90,14 @@ public class FrameDefaultImpl implements Frame {
         return a.toString();
     }
 
+    //count the occurences of '-' in the two strings.
     private boolean countDash(String a, String b){
         int countA = 0, countB = 0;
         for(int i = 0; i < a.length(); i++){
             if(a.charAt(i) == '-') countA++;
             if(b.charAt(i) == '-') countB++;
         }
-        return (countA > countB);
+        return (countA >= countB);
     }
 
 

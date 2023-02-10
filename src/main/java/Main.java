@@ -4,7 +4,7 @@ public class Main {
 
     Frame h1 = new FrameDefaultImpl("-----");//horizontal line
     Frame v1 = new FrameDefaultImpl("|", "|", "|");//vertical line
-    Frame empty = new FrameDefaultImpl("       ", "       ", "       ", "       ", "       ");//empty box
+    Frame emptyBox = new FrameDefaultImpl("       ", "       ", "       ", "       ", "       ");//empty box
     Frame vertical1 = new FrameDefaultImpl("\\", "/", "\\");//left oriented vertical bar
     Frame vertical2 = new FrameDefaultImpl("/", "\\", "/");//right oriented vertical bar
 
@@ -39,14 +39,14 @@ public class Main {
             int flag = 0;
             //init the first element. Can be empty box;
             if(list.get(0).getGroup() > 1) {
-                row = emptyBox();
+                row = emptyBox;
                 flag = 1;
             }else{
                 row = elementBox(list.get(0));
             }
             for(int i = 2, k = 1 - flag; i <= 18 && k < list.size(); i++){
                 if(i != list.get(k).getGroup()) {
-                    row = row.atLeftOf(emptyBox());
+                    row = row.atLeftOf(emptyBox);
                 }
                 else{
                     row = row.atLeftOf(elementBox(list.get(k)));
@@ -60,14 +60,12 @@ public class Main {
         Frame table = rows.get(0); //init
         //create table
         for (int j = 1 ; j < rows.size(); j++){
-            if(j == 7){
-                table = table.onTopOf(emptyBox());
+            if(j == 7){//we need a blank line after the 7-th period
+                table = table.onTopOf(emptyBox);
             }
             table = table.onTopOf(rows.get(j));
         }
-
         return table;
-
     }
 
     private Frame elementFrame(ElementList.Element element){
@@ -96,10 +94,5 @@ public class Main {
         box = h1.onTopOf(box.onTopOf(h1));
         return box;
     }
-
-    private Frame emptyBox(){
-        return empty;
-    }
-
 
 }
