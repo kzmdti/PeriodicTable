@@ -50,4 +50,4 @@ From the terminal in the project directory:
 ```
 
 All the tests runs correctly.
-Also, after extracting the application from the **.zip** file in `.\build\distribution` and run the application we find in `.\libs` the result is correct.
+Also, after extracting the application from the **.zip** file in `.\build\distribution` and run the application we find in `.\bin` the result is correct.
